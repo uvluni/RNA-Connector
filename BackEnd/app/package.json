@@ -1,0 +1,16 @@
+{
+  "name": "rna_connector",
+  "version": "1.0.0",
+  "description": "Connection to RNA API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.1",
+    "express": "^4.18.2",
+    "mongodb": "^6.2.0"
+  }
+}
