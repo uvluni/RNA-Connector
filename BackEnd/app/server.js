@@ -19,7 +19,7 @@ app.use('/auth', authRoutes);
 
 
 // Your main file (e.g., server.js or any other script)
-const getDailyplanRoutesFromAPI = require('./getDailyplanRoutesFromAPI');
+const getDailyplanRoutesFromAPI = require('./utils/getDailyplanRoutesFromAPI');
 
 // Assuming you have obtained the authentication token
 const authToken = 'YOUR_RECEIVED_TOKEN'; // Replace with your received token
