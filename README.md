@@ -1,23 +1,30 @@
 # RNA-Connector
 Project Definition:
-The program will connect to Omnitracs Routing API, retrieves Planning and maintenance entities (Drivers, Equipment, etc.), and presents it in a web browser.
+The program will connect to Omnitracs Routing API, retrieve Planning and maintenance entities (Drivers, Equipment, etc.), and present it in a web browser.
 
 Stack:
-Backend: Node.js, Express.js (Axios: JavaScript library used to make HTTP requests from node)
+Backend: Node.js, Express.js (Axios: JavaScript library used to make HTTP requests from Node)
 Frontend: JavaScript, React (HTML/CSS)
 Database: MongoDB
 Deployment: Heroku
 Version Control: Git
 Hosting: Local at first
 
-1.	Create a Node server
-2.	Connect the server to Roadnet API
-3.	GET a Token
-4.	Pass Token to another Module
-5.	Use the Token to GET Routes (Hard coded query parameters in the modules)
-6.	GET Routes by receiving Route Query parameters injected into the GET Routes Module
-7.	Save Rotes to DB
-8.	Create UI for Login
-9.	Create UI for selecting Route query parameters
-10.	Create UI for presenting Routes query result
+* UI for importing a CSV - V
+* Coping and processing the file - V
+* Connect the server to Roadnet API
+*	GET a Token
+*	Pass the Token to another Module
+*	Use the Token and the data from the CSV file to create a Location (https://apex-prod-eu-integration.eu.roadnet.com/integration/v1/admin/locations)
+
+
+
+
+
+*	GET Routes (Hard-coded query parameters in the modules)
+*	GET Routes by receiving Route Query parameters injected into the GET Routes Module
+*	Save Rotes to DB
+*	Create UI for Login
+*	Create UI for selecting Route query parameters
+*	Create UI for presenting Routes query result
 
