@@ -1,6 +1,8 @@
 const csv = require('csv-parser');
 const fs = require('fs');
 const axios = require('axios');
+const util = require('util');
+
 
 let authToken = null; // Variable to store the token
 
@@ -37,6 +39,42 @@ const sendFile = async (req, res) => {
     fs.createReadStream(filePath)
       .pipe(csv())
       .on('data', (data) => {
+        console.log('****');
+        console.log(data);
+        console.log('****');
+
+
+        const transformedObject = {
+          items: [
+            {
+              identity: {
+                entityKey: 1031,
+                identifier: data.identifier
+              },
+              regionVisibility: {
+                visibleInAllRegions: false,
+                regionIdentities: [
+                  {
+                    identifier: data.Region
+                  }
+                ]
+              },
+              locationType: 'Service',
+              standardInstructions: data['Standard Instructions'],
+              timeZone: 'Israel',
+              address: {
+                addressLine1: data['Address Line'],
+                city: data.City
+              },
+              description: data.Description
+            }
+          ]
+        };
+        
+        
+        console.log(util.inspect(transformedObject, { depth: null }));
+
+
         Object.keys(data).forEach((header) => {
           console.log(`${header}: ${data[header]}`);
         });
