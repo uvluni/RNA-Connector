@@ -28,3 +28,10 @@ Hosting: Local at first
 *	Create UI for selecting Route query parameters
 *	Create UI for presenting Routes query result
 
+uvluni@gmail.com
+
+
+08/12/23 Assignments:
+uv: Inside fileHandler, add authentication + token save   -   Done. Token is saved to authToken let
+uv: Figure out in Postman how to add a Location   -   Done. Example on Postman Workspace
+Esther: Update the server to be able to call add Location according to the Postman test
