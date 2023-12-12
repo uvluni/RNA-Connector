@@ -3,7 +3,6 @@ const fs = require('fs');
 const axios = require('axios');
 const util = require('util');
 
-
 let authToken = null; // Variable to store the token
 
 const authenticate = async () => {
@@ -24,6 +23,27 @@ const authenticate = async () => {
   }
 };
 
+
+const getLocations = async (req, res) => {
+
+  if (!authToken) {
+    // Authenticate if token is not available
+    await authenticate();
+  }
+  const endPoint = 'https://apex-prod-eu-integration.eu.roadnet.com/integration/v1/admin/locations';
+  const config = {
+    headers: {
+      'Authorization': 'Bearer ' + authToken
+    }
+  };
+
+  const locations = await axios.get(endPoint, config);
+  res.status(200).json({ data: locations.data });
+  console.log(JSON.stringify(locations.data, null, 2));
+
+  return;
+}
+
 const sendFile = async (req, res) => {
   try {
     if (!authToken) {
@@ -35,10 +55,10 @@ const sendFile = async (req, res) => {
       return res.status(400).send('No file uploaded.');
     }
 
-    const filePath = req.file.path;
-    fs.createReadStream(filePath)
+    fs.createReadStream(req.file.path)
       .pipe(csv())
       .on('data', (data) => {
+        /*
         console.log('****');
         console.log(data);
         console.log('****');
@@ -71,9 +91,8 @@ const sendFile = async (req, res) => {
           ]
         };
         
-        
         console.log(util.inspect(transformedObject, { depth: null }));
-
+*/
 
         Object.keys(data).forEach((header) => {
           console.log(`${header}: ${data[header]}`);
@@ -90,4 +109,4 @@ const sendFile = async (req, res) => {
   }
 };
 
-module.exports = { sendFile };
+module.exports = { sendFile, getLocations };

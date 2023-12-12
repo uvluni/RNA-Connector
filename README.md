@@ -31,7 +31,13 @@ Hosting: Local at first
 uvluni@gmail.com
 
 
-08/12/23 Assignments:
+08/12/23:
 uv: Inside fileHandler, add authentication + token save   -   Done. Token is saved to authToken let
 uv: Figure out in Postman how to add a Location   -   Done. Example on Postman Workspace
+
+
+11/12/23:
+uv: authenticate returns authToken+date time in an array
+uv: Try creating transformedObject in another file
 Esther: Update the server to be able to call add Location according to the Postman test
+

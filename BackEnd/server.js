@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const multer = require('multer'); // Librery for file upload
-const { sendFile } = require('./fileHandler');
+const { sendFile, getLocations } = require('./fileHandler');
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -27,6 +27,9 @@ app.use((req, res, next) => {
 
 // Route to handle file upload
 app.post('/api/sendfile', upload.single('csvFile'), sendFile);
+
+// Route to handle GET Locations
+app.get('/api/getLocations', getLocations)
 
 const PORT = 3000;
 app.listen(PORT, () => {
