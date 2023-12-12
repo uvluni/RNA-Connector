@@ -2,8 +2,12 @@ const csv = require('csv-parser');
 const fs = require('fs');
 const axios = require('axios');
 const util = require('util');
+const transformObject = require('./transformObjectImportLocations');
 
-let authToken = null; // Variable to store the token
+let authToken = {
+  token: '',
+  date: ''
+};
 
 const authenticate = async () => {
   try {
@@ -14,39 +18,42 @@ const authenticate = async () => {
     const credentials = { username, password };
     const response = await axios.post(authEndpoint, credentials);
 
-    authToken = response.data.token; // Save the token to the variable
+    authToken = {
+      token: response.data.token,
+      date: new Date()
+    }; // Save the token to the object
 
-    console.log('Token:', authToken); // Log the saved token
+    console.log('Token:', authToken.token, '\nToken creation time:', authToken.date); // Log the saved token
+
   } catch (error) {
     console.error('Authentication error:', error);
     throw new Error('Authentication failed');
   }
 };
 
-
 const getLocations = async (req, res) => {
 
-  if (!authToken) {
+  if (!authToken.token) {
     // Authenticate if token is not available
     await authenticate();
   }
   const endPoint = 'https://apex-prod-eu-integration.eu.roadnet.com/integration/v1/admin/locations';
   const config = {
     headers: {
-      'Authorization': 'Bearer ' + authToken
+      'Authorization': 'Bearer ' + authToken.token
     }
   };
 
   const locations = await axios.get(endPoint, config);
   res.status(200).json({ data: locations.data });
-  console.log(JSON.stringify(locations.data, null, 2));
+  //console.log(JSON.stringify(locations.data, null, 2));
 
   return;
 }
 
 const sendFile = async (req, res) => {
   try {
-    if (!authToken) {
+    if (!authToken.token) {
       // Authenticate if token is not available
       await authenticate();
     }
@@ -62,37 +69,16 @@ const sendFile = async (req, res) => {
         console.log('****');
         console.log(data);
         console.log('****');
-
-
-        const transformedObject = {
-          items: [
-            {
-              identity: {
-                entityKey: 1031,
-                identifier: data.identifier
-              },
-              regionVisibility: {
-                visibleInAllRegions: false,
-                regionIdentities: [
-                  {
-                    identifier: data.Region
-                  }
-                ]
-              },
-              locationType: 'Service',
-              standardInstructions: data['Standard Instructions'],
-              timeZone: 'Israel',
-              address: {
-                addressLine1: data['Address Line'],
-                city: data.City
-              },
-              description: data.Description
-            }
-          ]
-        };
-        
         console.log(util.inspect(transformedObject, { depth: null }));
-*/
+        */
+
+        // Call the transformObject function
+        const transformed = transformObject(data);
+
+        // Display the transformed object
+        console.log("Transformed: ", util.inspect(transformed, { depth: null }));
+        console.log("Original: ", util.inspect(data, { depth: null }));
+
 
         Object.keys(data).forEach((header) => {
           console.log(`${header}: ${data[header]}`);

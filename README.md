@@ -37,7 +37,9 @@ uv: Figure out in Postman how to add a Location   -   Done. Example on Postman W
 
 
 11/12/23:
-uv: authenticate returns authToken+date time in an array
+uv: Authenticate returns authToken+date time   -   Done. authToken has .token and .date properties
 uv: Try creating transformedObject in another file
+uv: After I do git add ., there are still changes not staged for commit
+uv: Change git user in vs code to uvluni@gmail.com
 Esther: Update the server to be able to call add Location according to the Postman test
 
