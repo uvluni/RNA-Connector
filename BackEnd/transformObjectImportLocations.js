@@ -1,5 +1,3 @@
-// transformObject.js
-
 function transformObject(originalObject) {
     const transformedObject = {
         items: [
