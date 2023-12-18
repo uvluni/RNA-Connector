@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
 const multer = require('multer'); // Librery for file upload
-const { sendFile, getLocations } = require('./fileHandler');
+//const { sendFile, getLocations } = require('./fileHandler');
+const { sendFile } = require('./fileProcessor');
+const { getLocations } = require('./locationHandler');
 
 const upload = multer({
   storage: multer.diskStorage({
