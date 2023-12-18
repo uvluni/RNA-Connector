@@ -19,8 +19,6 @@ const authenticate = async () => {
       date: new Date()
     };
 
-    console.log('Token:', authToken.token, '\nToken creation time:', authToken.date);
-
   } catch (error) {
     console.error('Authentication error:', error);
     throw new Error('Authentication failed');
