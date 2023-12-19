@@ -4,6 +4,7 @@ const axios = require('axios');
 const util = require('util');
 const transformObject = require('./transformObjectImportLocations');
 const { authenticate } = require('./authentication');
+
 let authToken = {
   token: '',
   date: ''
@@ -19,21 +20,31 @@ const sendFile = async (req, res) => {
       return res.status(400).send('No file uploaded.');
     }
 
+    const processedData = [];
+
     fs.createReadStream(req.file.path)
       .pipe(csv())
       .on('data', (data) => {
         const transformed = transformObject(data);
-
-        console.log("Transformed: ", util.inspect(transformed, { depth: null }));
-        console.log("Original: ", util.inspect(data, { depth: null }));
-
-        Object.keys(data).forEach((header) => {
-          console.log(`${header}: ${data[header]}`);
-        });
-        console.log('-------------');
+        processedData.push(transformed); // Collect transformed data
       })
       .on('end', () => {
-        res.status(200).send('File uploaded and processed successfully.');
+        // Additional information to send along with success response
+        const additionalInfo = {
+          totalProcessed: processedData.length, // Total processed records
+          timestamp: new Date().toISOString(), // Current timestamp
+          fileInfo: {
+            originalFileName: req.file.originalname, // Original file name
+            fileSize: req.file.size // File size
+          }
+        };
+
+        // Send data to API
+        res.status(200).json({
+          message: 'File uploaded and processed successfully.',
+          data: processedData, // Send processed data
+          additionalInfo: additionalInfo // Send additional information
+        });
       });
 
   } catch (error) {
@@ -43,4 +54,3 @@ const sendFile = async (req, res) => {
 };
 
 module.exports = { sendFile };
-
