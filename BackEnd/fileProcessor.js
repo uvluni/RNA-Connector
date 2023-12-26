@@ -1,9 +1,9 @@
-const fs = require('fs');
-const csv = require('csv-parser');
-const util = require('util');
-const transformObject = require('./transformObjectImportLocations');
 const { authenticate } = require('./authentication');
+const csv = require('csv-parser');
+const fs = require('fs');
 const iconv = require('iconv-lite');
+const transformObject = require('./transformObjectImportLocations');
+const util = require('util');
 
 let authToken = {
   token: '',

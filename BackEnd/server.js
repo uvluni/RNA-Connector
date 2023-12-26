@@ -1,9 +1,9 @@
-const express = require('express');
 const app = express();
+const express = require('express');
+const { getLocations } = require('./locationHandler');
 const multer = require('multer');
 const path = require('path');
 const { sendFile } = require('./fileProcessor');
-const { getLocations } = require('./locationHandler');
 
 const upload = multer({
   storage: multer.diskStorage({
