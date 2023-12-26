@@ -1,9 +1,9 @@
 const fs = require('fs');
 const csv = require('csv-parser');
-const axios = require('axios');
 const util = require('util');
 const transformObject = require('./transformObjectImportLocations');
 const { authenticate } = require('./authentication');
+const iconv = require('iconv-lite');
 
 let authToken = {
   token: '',
@@ -23,27 +23,27 @@ const sendFile = async (req, res) => {
     const processedData = [];
 
     fs.createReadStream(req.file.path)
+      .pipe(iconv.decodeStream('utf-8'))
       .pipe(csv())
       .on('data', (data) => {
         const transformed = transformObject(data);
-        processedData.push(transformed); // Collect transformed data
+        console.log(JSON.stringify(transformed, null, 2));
+        processedData.push(transformed);
       })
       .on('end', () => {
-        // Additional information to send along with success response
         const additionalInfo = {
-          totalProcessed: processedData.length, // Total processed records
-          timestamp: new Date().toISOString(), // Current timestamp
+          totalProcessed: processedData.length,
+          timestamp: new Date().toISOString(),
           fileInfo: {
-            originalFileName: req.file.originalname, // Original file name
-            fileSize: req.file.size // File size
+            originalFileName: req.file.originalname,
+            fileSize: req.file.size
           }
         };
 
-        // Send data to API
         res.status(200).json({
           message: 'File uploaded and processed successfully.',
-          data: processedData, // Send processed data
-          additionalInfo: additionalInfo // Send additional information
+          data: processedData,
+          additionalInfo: additionalInfo
         });
       });
 

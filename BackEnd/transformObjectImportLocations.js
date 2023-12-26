@@ -4,24 +4,24 @@ function transformObject(originalObject) {
             {
                 identity: {
                     entityKey: 101,
-                    identifier: originalObject.Identifier // Use identifier from original object
+                    identifier: originalObject.Id
                 },
                 regionVisibility: {
                     visibleInAllRegions: false,
                     regionIdentities: [
                         {
-                            identifier: originalObject.Region // Use Region from original object
+                            identifier: originalObject.Region
                         }
                     ]
                 },
                 locationType: 'Service',
-                standardInstructions: originalObject.Instructions, // Use Standard Instructions from original object
+                standardInstructions: originalObject.Instructions,
                 timeZone: 'Israel',
                 address: {
-                    addressLine1: originalObject.Address, // Use Address Line from original object
-                    city: originalObject.City // Use City from original object
+                    addressLine1: originalObject.Address,
+                    city: originalObject.City
                 },
-                description: originalObject.Description // Use Description from original object
+                description: originalObject.Description
             }
         ]
     };
