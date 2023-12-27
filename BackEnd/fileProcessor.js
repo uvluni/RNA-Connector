@@ -1,9 +1,10 @@
 const fs = require('fs');
 const csv = require('csv-parser');
-const axios = require('axios');
 const util = require('util');
 const transformObject = require('./transformObjectImportLocations');
 const { authenticate } = require('./authentication');
+const iconv = require('iconv-lite');
+
 let authToken = {
   token: '',
   date: ''
@@ -19,21 +20,31 @@ const sendFile = async (req, res) => {
       return res.status(400).send('No file uploaded.');
     }
 
+    const processedData = [];
+
     fs.createReadStream(req.file.path)
+      .pipe(iconv.decodeStream('utf-8'))
       .pipe(csv())
       .on('data', (data) => {
         const transformed = transformObject(data);
-
-        console.log("Transformed: ", util.inspect(transformed, { depth: null }));
-        console.log("Original: ", util.inspect(data, { depth: null }));
-
-        Object.keys(data).forEach((header) => {
-          console.log(`${header}: ${data[header]}`);
-        });
-        console.log('-------------');
+        console.log(JSON.stringify(transformed, null, 2));
+        processedData.push(transformed);
       })
       .on('end', () => {
-        res.status(200).send('File uploaded and processed successfully.');
+        const additionalInfo = {
+          totalProcessed: processedData.length,
+          timestamp: new Date().toISOString(),
+          fileInfo: {
+            originalFileName: req.file.originalname,
+            fileSize: req.file.size
+          }
+        };
+
+        res.status(200).json({
+          message: 'File uploaded and processed successfully.',
+          data: processedData,
+          additionalInfo: additionalInfo
+        });
       });
 
   } catch (error) {
@@ -43,4 +54,3 @@ const sendFile = async (req, res) => {
 };
 
 module.exports = { sendFile };
-
