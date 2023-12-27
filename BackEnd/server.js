@@ -33,7 +33,7 @@ app.post('/api/sendfile', upload.single('csvFile'), sendFile);
 // Route to handle GET Locations
 app.get('/api/getLocations', getLocations)
 
-const PORT = 3000;
+const PORT = 3000; 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
