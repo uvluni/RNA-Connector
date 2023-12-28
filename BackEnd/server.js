@@ -1,6 +1,6 @@
 const express = require('express');
-const path = require('path');
 const multer = require('multer');
+const path = require('path');
 
 const { getLocations } = require('./locationHandler');
 const { sendFile } = require('./fileProcessor');
