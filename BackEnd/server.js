@@ -1,24 +1,10 @@
 const express = require('express');
-const app = express();
-const multer = require('multer');
-const path = require('path');
-const { sendFile } = require('./fileProcessor');
 const { getLocations } = require('./locationHandler');
+const { addLocationsProcess } = require('./routes/addLocations');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' }); // Configure Multer
 
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, path.join(__dirname, 'uploads'));
-    },
-    filename: function (req, file, cb) {
-      const date = new Date();
-      const formattedDate = `${('0' + date.getDate()).slice(-2)}_${('0' + (date.getMonth() + 1)).slice(-2)}_${date.getFullYear()}-${('0' + date.getHours()).slice(-2)}_${('0' + date.getMinutes()).slice(-2)}`;
-      const fileName = file.originalname.split('.')[0];
-      const fileExtension = file.originalname.slice(file.originalname.lastIndexOf('.'));
-      cb(null, `${fileName}-${formattedDate}${fileExtension}`);
-    }
-  })
-});
+const app = express();
 
 // Handle CORS if your frontend and backend are on different origins
 app.use((req, res, next) => {
@@ -28,10 +14,9 @@ app.use((req, res, next) => {
 });
 
 // Route to handle file upload
-app.post('/api/sendfile', upload.single('csvFile'), sendFile);
+app.post('/api/sendfile', upload.single('csvFile'), addLocationsProcess);
 
-// Route to handle GET Locations
-app.get('/api/getLocations', getLocations)
+app.get('/api/getLocations', getLocations);
 
 const PORT = 3000; 
 app.listen(PORT, () => {
