@@ -1,5 +1,6 @@
-const { authenticate } = require('./authentication');
 const axios = require('axios');
+
+const { authenticate } = require('./authentication');
 
 let authToken = {
   token: '',

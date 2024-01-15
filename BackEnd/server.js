@@ -1,9 +1,11 @@
-const app = express();
 const express = require('express');
-const { getLocations } = require('./locationHandler');
-const multer = require('multer');
 const path = require('path');
+const multer = require('multer');
+
+const { getLocations } = require('./locationHandler');
 const { sendFile } = require('./fileProcessor');
+
+const app = express();
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -31,7 +33,7 @@ app.use((req, res, next) => {
 app.post('/api/sendfile', upload.single('csvFile'), sendFile);
 
 // Route to handle GET Locations
-app.get('/api/getLocations', getLocations)
+app.get('/api/getLocations', getLocations);
 
 const PORT = 3000; 
 app.listen(PORT, () => {
