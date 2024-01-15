@@ -3,33 +3,24 @@ const fs = require('fs');
 const iconv = require('iconv-lite');
 const util = require('util');
 
-const { authenticate } = require('./authentication');
 const transformObject = require('./transformObjectImportLocations');
 
-let authToken = {
-  token: '',
-  date: ''
-};
-
-const sendFile = async (req, res) => {
+const uploadFile = async (req, res) => {
   try {
-    if (!authToken.token) {
-      await authenticate();
-    }
-
     if (!req.file) {
-      return res.status(400).send('No file uploaded.');
+      res.status(400).send('No file uploaded.');
+      return;
     }
 
     const processedData = [];
 
-    fs.createReadStream(req.file.path)
-      .pipe(iconv.decodeStream('utf-8'))
-      .pipe(csv())
-      .on('data', (data) => {
+    const readFile = fs.createReadStream(req.file.path);
+    const csvData = readFile.pipe(iconv.decodeStream('utf-8')).pipe(csv());
+
+    csvData.on('data', (data) => {
         const transformed = transformObject(data);
         console.log(JSON.stringify(transformed, null, 2));
-        processedData.push(transformed);
+        // processedData.push(transformed);
       })
       .on('end', () => {
         const additionalInfo = {
@@ -47,11 +38,10 @@ const sendFile = async (req, res) => {
           additionalInfo: additionalInfo
         });
       });
-
   } catch (error) {
     console.error('Error:', error.message);
     res.status(500).json({ error: 'Operation failed' });
   }
 };
 
-module.exports = { sendFile };
+module.exports = { uploadFile };

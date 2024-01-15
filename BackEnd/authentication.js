@@ -1,10 +1,5 @@
 const axios = require('axios');
 
-let authToken = {
-  token: '',
-  date: ''
-};
-
 const authenticate = async () => {
   try {
     const username = 'apieu@rasner.co.il';
@@ -14,7 +9,7 @@ const authenticate = async () => {
     const credentials = { username, password };
     const response = await axios.post(authEndpoint, credentials);
 
-    authToken = {
+    return {
       token: response.data.token,
       date: new Date()
     };
