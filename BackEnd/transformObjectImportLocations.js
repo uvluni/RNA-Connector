@@ -3,34 +3,36 @@ function transformAddLocationFormat(csvData) {
 
     csvData.forEach((originalObject) => {
         const transformedObject = {
-            identity: {
-                entityKey: 101,
-                identifier: originalObject.Id
+            "identity": {
+                "entityKey": 101,
+                "identifier": originalObject.Id
             },
-            regionVisibility: {
-                visibleInAllRegions: false,
-                regionIdentities: [
+            "regionVisibility": {
+                "visibleInAllRegions": false,
+                "regionIdentities": [
                     {
-                        identifier: originalObject.Region
+                        "identifier": originalObject.Region
                     }
                 ]
             },
-            locationType: 'Service',
-            standardInstructions: originalObject.Instructions,
-            timeZone: 'Israel',
-            address: {
-                addressLine1: originalObject.Address,
-                city: originalObject.City
+            "locationType": 'Service',
+            "standardInstructions": originalObject.Instructions,
+            "timeZone": 'Israel',
+            "address": {
+                "addressLine1": originalObject.Address,
+                "city": originalObject.City
             },
-            description: originalObject.Description
+            "description": originalObject.Description
         };
 
         transformedData.push(transformedObject);
     });
-    let wrapedTransformedData = {
-        items: transformedData
-    }
-    return wrapedTransformedData;
+
+    const wrappedTransformedData = {
+        "items": transformedData
+    };
+
+    return wrappedTransformedData;
 }
 
 module.exports = { transformAddLocationFormat };
