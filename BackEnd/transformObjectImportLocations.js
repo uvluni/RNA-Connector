@@ -20,7 +20,7 @@ function transformAddLocationFormat(csvData) {
             "timeZone": 'Israel',
             "address": {
                 "addressLine1": originalObject.Address,
-                "city": originalObject.City
+                "stateOrProvince": originalObject.City
             },
             "description": originalObject.Description
         };

@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const { authenticate } = require('./authentication');
+const { authenticate } = require('../authentication');
 
 const getLocations = async (req, res) => {
   const authToken = await authenticate();

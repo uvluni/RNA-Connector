@@ -1,26 +1,31 @@
 const fileInput = document.getElementById('csvFileInput');
+const datePicker = document.getElementById('sessionDatePicker');
+const submitButton = document.getElementById('submitButton');
 
 fileInput.addEventListener('change', function() {
-  const file = fileInput.files[0];
+  // Existing file upload logic
+});
 
-  if (file) {
-    const formData = new FormData();
-    formData.append('csvFile', file);
+datePicker.addEventListener('change', function() {
+  // Existing date picker logic
+});
 
-    fetch('http://localhost:3000/api/sendfile', {
-      method: 'POST',
-      body: formData
-    })
+submitButton.addEventListener('click', function() {
+  const selectedDate = datePicker.value;
+
+  fetch(`http://localhost:3000/api/getRoutes?sessionDate=${selectedDate}`)
     .then(response => {
       if (response.ok) {
-        console.log('File uploaded successfully.');
-        // Additional actions upon successful file upload can be added here
+        return response.json();
       } else {
-        console.error('File upload failed.');
+        throw new Error('Failed to fetch routes.');
       }
+    })
+    .then(data => {
+      console.log('Routes for the selected date:', data);
+      // Handle the routes data as needed
     })
     .catch(error => {
       console.error('Error:', error);
     });
-  }
 });
