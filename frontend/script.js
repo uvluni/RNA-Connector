@@ -1,5 +1,6 @@
 const fileInput = document.getElementById('csvFileInput');
 const datePicker = document.getElementById('sessionDatePicker');
+const showStopLevelCheckbox = document.getElementById('showStopLevel');
 const submitButton = document.getElementById('submitButton');
 
 fileInput.addEventListener('change', function() {
@@ -12,8 +13,11 @@ datePicker.addEventListener('change', function() {
 
 submitButton.addEventListener('click', function() {
   const selectedDate = datePicker.value;
+  const apiUrl = showStopLevelCheckbox.checked
+    ? `http://localhost:3000/api/getStopsRoutes?sessionDate=${selectedDate}`
+    : `http://localhost:3000/api/getRoutes?sessionDate=${selectedDate}`;
 
-  fetch(`http://localhost:3000/api/getRoutes?sessionDate=${selectedDate}`)
+  fetch(apiUrl)
     .then(response => {
       if (response.ok) {
         return response.json();

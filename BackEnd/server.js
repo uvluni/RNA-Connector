@@ -1,6 +1,7 @@
 const express = require('express');
 const { getLocations } = require('./routes/locationHandler');
 const { getRoutes } = require('./routes/routesHandler');
+const { getStopsRoutes } = require('./routes/routesStopsHandler');
 const { addLocationsProcess } = require('./routes/addLocations');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' }); // Configure Multer
@@ -20,6 +21,8 @@ app.post('/api/sendfile', upload.single('csvFile'), addLocationsProcess);
 app.get('/api/getLocations', getLocations);
 
 app.get('/api/getRoutes', getRoutes);
+
+app.get('/api/getStopsRoutes', getStopsRoutes);
 
 const PORT = 3000; 
 app.listen(PORT, () => {
