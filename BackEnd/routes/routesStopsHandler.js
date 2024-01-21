@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { authenticate } = require('../authentication');
-const { saveStopsRoutesToCsv } = require('./routesStopsToCsv');
+const { saveRoutesStopsToCsv } = require('./routesStopsToCsv');
 
 const getStopsRoutes = async (req, res) => {
     try {
@@ -16,7 +16,7 @@ const getStopsRoutes = async (req, res) => {
         };
 
         const routes = await axios.get(endPoint, config);
-        saveStopsRoutesToCsv(routes.data, 'path/to/getRoutes'); // Adjust the folder path as needed
+        saveRoutesStopsToCsv(routes.data, 'path/to/getRoutes'); // Adjust the folder path as needed
         res.status(200).json({ data: routes.data });
     } catch (error) {
         console.error('Error:', error.message);
