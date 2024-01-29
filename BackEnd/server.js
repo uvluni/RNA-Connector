@@ -2,6 +2,7 @@ const express = require('express');
 const { getLocations } = require('./routes/locationHandler');
 const { getRoutes } = require('./routes/routesHandler');
 const { getStopsRoutes } = require('./routes/routesStopsHandler');
+const { getOrders } = require('./routes/ordersHandler');
 const { addLocationsProcess } = require('./routes/addLocations');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' }); // Configure Multer
@@ -23,6 +24,8 @@ app.get('/api/getLocations', getLocations);
 app.get('/api/getRoutes', getRoutes);
 
 app.get('/api/getStopsRoutes', getStopsRoutes);
+
+app.get('/api/getOrders', getOrders);
 
 const PORT = 3000; 
 app.listen(PORT, () => {

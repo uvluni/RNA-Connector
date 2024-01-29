@@ -33,3 +33,26 @@ submitButton.addEventListener('click', function() {
       console.error('Error:', error);
     });
 });
+
+getOrdersButton.addEventListener('click', function() {
+  const selectedDate = datePicker.value;
+  const apiUrl = showStopLevelCheckbox.checked
+    ? `http://localhost:3000/api/getOrders?sessionDate=${selectedDate}`
+    : `http://localhost:3000/api/getOrders?sessionDate=${selectedDate}`;
+
+  fetch(apiUrl)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Failed to fetch orders.');
+      }
+    })
+    .then(data => {
+      console.log('Orders:', data);
+      // Handle the orders data as needed
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+});

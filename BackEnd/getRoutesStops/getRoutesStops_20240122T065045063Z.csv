@@ -1,0 +1,5 @@
+﻿"RouteIdentifier","StopSequence","StopType","StopDescription","ArrivalTimestamp","DepartureTimestamp","DistanceTo","TravelDurationTo","TotalDeliveryQuantity1","TotalDeliveryQuantity2","TotalDeliveryQuantity3"
+"R-050",1,"ServiceableStop","ג.ד המכולת","2023-11-21T04:32:03.29","2023-11-21T05:02:03.29",103.69928,1923.29,450,34,3
+"R-050",2,"ServiceableStop","(5) חצי חינם-הלח""י ראשל""צ","2023-11-21T05:35:55.324","2023-11-21T06:24:15.324",105.92802,2032.034,1000,23,1
+"R-050",3,"ServiceableStop","(14) טיב טעם רשתות בע""מ-ראשל""צ מזרח","2023-11-21T06:29:59.083","2023-11-21T08:01:39.083",14.48069,343.759,2300,34,2
+"R-051",1,"ServiceableStop","סיטונאות טבזון 1997 בע""מ","2023-11-20T22:21:11.048","2023-11-20T22:36:11.048",69.05015,1271.048,600,12,1
